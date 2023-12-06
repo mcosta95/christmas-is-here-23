@@ -69,33 +69,37 @@ def are_adjacent_digits(data_, row_, col_):
     return list(set(digits_result))
 
 
-def challenge_day_3_part_1(data_):
+def challenge_day_3(data_, part_=1):
 
     final_list_score = []
+
     for row_ in range(0, len(data_)):
         for col_ in range(0, len(data_[0])):
             if not data_[row_][col_].isdigit() and data_[row_][col_] != ".":
                 result_ = are_adjacent_digits(data_, row_, col_)
-                final_list_score += result_
 
-    final_score = sum(final_list_score)
+                if data_[row_][col_] == "*" and len(result_) == 2 and part_==2:
+                    final_list_score.append(result_[0]*result_[1])
 
-    return final_score
+                elif part_ == 1:
+                    final_list_score += result_
+
+    return sum(final_list_score)
 
 
 def run_tests():
     print(f"\nRunning Tests:")
-    assert challenge_day_3_part_1(process_main_data(3, 1, test=True)) == 4361
-    #assert challenge_day_2_part_2(process_main_data(2, 1, test=True)) == 2286
+    assert challenge_day_3(process_main_data(3, 1, test=True), part_=1) == 4361
+    assert challenge_day_3(process_main_data(3, 1, test=True), part_=2) == 467835
     print("ALL GOOD")
 
 
 def run_solution():
     print(f"\nRunning Solutions: \n------------------")
-    answer1 = challenge_day_3_part_1(process_main_data(3, 1, test=False))
+    answer1 = challenge_day_3(process_main_data(3, 1, test=False), part_=1)
     print(f"Answer part1: {answer1}")
-    #answer2 = challenge_day_2_part_2(process_main_data(2, 1, test=False))
-    #print(f"Answer part2: {answer2}")
+    answer2 = challenge_day_3(process_main_data(3, 1, test=False), part_=2)
+    print(f"Answer part2: {answer2}")
 
 if __name__ == "__main__":
     run_tests()
